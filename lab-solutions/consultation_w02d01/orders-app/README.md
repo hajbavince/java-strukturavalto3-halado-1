@@ -17,3 +17,4 @@ Van benne egy `collectProductsAndCount()` metódus, ami lekéri az összes term�
 hogy melyik termékből összesen hány rendelést kell teljesíteni.
 
 * Írj tesztet az `Order` osztályra!
+* Írj tesztet az `OrderRepository` `saveOrder()` metódusára!
