@@ -42,5 +42,9 @@ public class OrderRepository {
                 (rs, rn) -> new Order(rs.getLong("id"), rs.getString("product_name"), rs.getInt("product_count"), rs.getInt("price_per_product")),
                 limit);
     }
+
+    public void clearTable() {
+        jdbcTemplate.execute("delete from orders where 1=1");
+    }
 }
 

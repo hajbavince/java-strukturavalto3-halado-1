@@ -7,7 +7,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mariadb.jdbc.MariaDbDataSource;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Stream;
@@ -22,21 +24,32 @@ class OrderRepositoryTest {
 
     @BeforeEach
     void init() {
-        MariaDbDataSource dataSource = new MariaDbDataSource();
-        try {
-            dataSource.setUrl("jdbc:mariadb://localhost:3306/employees?useUnicode=true");
-            dataSource.setUser("employees");
-            dataSource.setPassword("employees");
-        } catch (SQLException se) {
-            throw new IllegalStateException("Cannot connect!", se);
-        }
+//        MariaDbDataSource dataSource = new MariaDbDataSource();
+//        try {
+//            dataSource.setUrl("jdbc:mariadb://localhost:3306/employees?useUnicode=true");
+//            dataSource.setUser("employees");
+//            dataSource.setPassword("employees");
+//        } catch (SQLException se) {
+//            throw new IllegalStateException("Cannot connect!", se);
+//        }
+//
+//        Flyway flyway = Flyway.configure().cleanDisabled(false).dataSource(dataSource).load();
+//
+//        flyway.clean();
+//        flyway.migrate();
 
-        Flyway flyway = Flyway.configure().cleanDisabled(false).dataSource(dataSource).load();
+        orderRepository = new OrderRepository(getMySQLDataSource());
+        orderRepository.clearTable();
+    }
 
-        flyway.clean();
-        flyway.migrate();
 
-        orderRepository = new OrderRepository(dataSource);
+    public static DataSource getMySQLDataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/employees?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false&allowMultiQueries=true");
+        dataSource.setUsername("root");
+        dataSource.setPassword("Test123!");
+        return dataSource;
     }
 
     @Test
