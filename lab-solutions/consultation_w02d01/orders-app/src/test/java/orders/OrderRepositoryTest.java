@@ -2,6 +2,7 @@ package orders;
 
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mariadb.jdbc.MariaDbDataSource;
 
 import java.sql.SQLException;
@@ -29,5 +30,16 @@ class OrderRepositoryTest {
         flyway.migrate();
 
         orderRepository = new OrderRepository(dataSource);
+    }
+
+    @Test
+    void testSaveOrder() {
+        long id1 = orderRepository.saveOrder(new Order("Laptop", 2, 2000));
+        assertNotEquals(0, id1);
+
+        Long id2 = orderRepository.saveOrder(new Order("Laptop", 2, 2000));
+        assertNotNull(id2);
+
+        assertNotEquals(id1, id2);
     }
 }

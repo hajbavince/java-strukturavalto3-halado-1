@@ -18,3 +18,4 @@ hogy melyik termékből összesen hány rendelést kell teljesíteni.
 
 * Írj tesztet az `Order` osztályra!
 * Írj tesztet az `OrderRepository` `saveOrder()` metódusára!
+* Írj tesztet az `OrderRepository` `getOrders()` metódusára!
