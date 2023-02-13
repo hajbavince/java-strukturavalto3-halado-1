@@ -15,3 +15,5 @@ Van még továbbá egy `getOrdersOverLimitedOrderPrice(int limit)` nevű metódu
 Az `OrderService` adattagja egy `OrderRepository`, ezért van lehetőség innen delegálni a kéréseket a repository felé.
 Van benne egy `collectProductsAndCount()` metódus, ami lekéri az összes terméket és egy `Map` adatszerkezetben összeszedi,
 hogy melyik termékből összesen hány rendelést kell teljesíteni.
+
+* Írj tesztet az `Order` osztályra!
