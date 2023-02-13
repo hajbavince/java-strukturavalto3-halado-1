@@ -3,11 +3,18 @@ package orders;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mariadb.jdbc.MariaDbDataSource;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class OrderRepositoryTest {
 
@@ -41,5 +48,41 @@ class OrderRepositoryTest {
         assertNotNull(id2);
 
         assertNotEquals(id1, id2);
+    }
+
+    @Test
+    void testGetOrders() {
+        orderRepository.saveOrder(new Order("Mobile", 4, 800));
+        orderRepository.saveOrder(new Order("Laptop", 2, 1200));
+        orderRepository.saveOrder(new Order("Tv", 1, 150));
+        orderRepository.saveOrder(new Order("Hairdrier", 2, 200));
+
+        List<Order> orders = orderRepository.getOrders();
+
+        assertThat(orders)
+                .hasSize(4)
+                .extracting(Order::getProductName)
+                .containsExactly("Hairdrier", "Laptop", "Mobile", "Tv");
+    }
+
+    @ParameterizedTest
+    @MethodSource("createArguments")
+    public void testGetOrdersOverLimitedOrderPrice(int limit, int piecesOfOrders) {
+        orderRepository.saveOrder(new Order("Mobile", 4, 800));
+        orderRepository.saveOrder(new Order("Laptop", 2, 1200));
+        orderRepository.saveOrder(new Order("Tv", 1, 150));
+        orderRepository.saveOrder(new Order("Hairdrier", 2, 200));
+
+        assertEquals(piecesOfOrders, orderRepository.getOrdersOverLimitedOrderPrice(limit).size());
+    }
+
+    static Stream<Arguments> createArguments() {
+        return Stream.of(
+                arguments(4000, 0),
+                arguments(3000, 1),
+                arguments(2000, 2),
+                arguments(300, 3),
+                arguments(100, 4)
+        );
     }
 }

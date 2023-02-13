@@ -16,6 +16,17 @@ Az `OrderService` adattagja egy `OrderRepository`, ezért van lehetőség innen 
 Van benne egy `collectProductsAndCount()` metódus, ami lekéri az összes terméket és egy `Map` adatszerkezetben összeszedi,
 hogy melyik termékből összesen hány rendelést kell teljesíteni.
 
+## Feladatok
+
 * Írj tesztet az `Order` osztályra!
 * Írj tesztet az `OrderRepository` `saveOrder()` metódusára!
 * Írj tesztet az `OrderRepository` `getOrders()` metódusára!
+* Írj egy paraméterezett tesztet az `OrderRepository` `getOrdersOverLimitedOrderPrice()` metódusára, 
+  legalább két különböző értékkel!
+* Hozz létre egy tesztosztályt az `OrderService` osztályra, amelyben kimockolod a osztály függőségét az `OrderRepository`
+  osztályra!
+* Írj egy-egy tesztesetet az `OrderService` osztály `saveOrder()` és `saveOrderAndDontReturnGeneratedKeys()` metódusaira!
+* Írj egy tesztesetet az `OrderService` osztály `getOrders()` metódusára!
+* Írj két tesztesetet az `OrderService` osztály `getOrdersOverLimitedOrderPrice()` metódusára! Az egyikben
+  egy sima lefutást tesztelj, a másikban egy kivételdobást!
+* Írj egy tesztesetet az `OrderService` osztály `collectProductsAndCount()` metódusára!
