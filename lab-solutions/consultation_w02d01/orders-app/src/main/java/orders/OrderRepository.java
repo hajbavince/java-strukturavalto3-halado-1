@@ -46,5 +46,21 @@ public class OrderRepository {
     public void clearTable() {
         jdbcTemplate.execute("delete from orders where 1=1");
     }
+
+    public void createTableOrders(){
+
+        jdbcTemplate.execute("create table orders\n" +
+                "(\n" +
+                "    id                  bigint auto_increment,\n" +
+                "    product_name         varchar(255),\n" +
+                "    product_count           bigint,\n" +
+                "    price_per_product     bigint,\n" +
+                "\n" +
+                "    constraint pk_orders primary key (id)\n" +
+                ")");
+
+    }
+
+
 }
 

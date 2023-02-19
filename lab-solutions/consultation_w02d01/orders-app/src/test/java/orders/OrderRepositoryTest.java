@@ -1,6 +1,7 @@
 package orders;
 
 import org.flywaydb.core.Flyway;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,6 +41,11 @@ class OrderRepositoryTest {
 
         orderRepository = new OrderRepository(getMySQLDataSource());
         orderRepository.clearTable();
+    }
+
+    //@BeforeAll
+    static void table() {
+      new  OrderRepository(getMySQLDataSource()).createTableOrders();
     }
 
 
